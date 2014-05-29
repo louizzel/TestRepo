@@ -1,6 +1,7 @@
 $(document).on("pagecreate","#Home",function(){
 	if(!navigator.onLine){
-		alert('You are not online!');
+		alert('You are not online! Make sure you are connected to the internet.');
+		window.close();
 	} else {
 		console.log('You are online!');
 		$.get("https://dl.dropboxusercontent.com/u/79930434/today.txt", function (data) {
@@ -11,19 +12,19 @@ $(document).on("pagecreate","#Home",function(){
 	    		if($.trim(dataList[0]) != ''){
 	    			if($.trim(dataList[0]) == "Date Today: " + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getFullYear())
 	    			{
-	    				for(var dataCtr = 1 ; dataCtr < dataList.length ; dataCtr++)
+	    				for(var dataCtr = 1 ; dataCtr < dataList.length ; dataCtr++) //each data from text file
 				        {
 				        	var eachEntry = dataList[dataCtr].split(' ');
-				        	for(var ctr = 0; ctr < employeeListIn.length ; ctr++)
+				        	for(var ctr = 0; ctr < employeeListIn.length ; ctr++) //each employee in the list
 				        	{
 				        		if(employeeListIn[ctr][0] == eachEntry[0])
 				        			if(eachEntry[1] == 'In'){
 				        				employeeListIn[ctr][1] = eachEntry[2];
-				        				$('#in').append('<li><a href="#">' + employeeListIn[ctr][0] + ' ' + employeeListIn[ctr][1] + '</li>');
+				        				$('#in').append('<li><a href="#">' + employeeListIn[ctr][0] + ' - ' + employeeListIn[ctr][1] + '</li>');
 				        			}
 				        			else if(eachEntry[1] == 'Out'){
 				        				employeeListIn[ctr][2] = eachEntry[2];
-				        				$('#out').append('<li><a href="#">' + employeeListIn[ctr][0] + ' ' + employeeListIn[ctr][2] + '</li>');
+				        				$('#out').append('<li><a href="#">' + employeeListIn[ctr][0] + ' - ' + employeeListIn[ctr][2] + '</li>');
 				        			}
 				        	}
 				        }
@@ -34,9 +35,6 @@ $(document).on("pagecreate","#Home",function(){
 			        			$('#absent').append('<li><a href="#">' + employeeListIn[ctr][0] + '</li>');
 			        	}
 	    			}
-
-	    			// employeeListIn
-	    			// $('#in').append('<li><a href="#">' + employeeListIn[0][0] + ' ' + employeeListIn[0][1] + '</li>');
 	    		}
 	    	}	    	
     	});
